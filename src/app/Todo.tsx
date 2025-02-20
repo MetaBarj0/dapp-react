@@ -2,8 +2,9 @@
 
 import { MouseEvent, useEffect, useState } from "react";
 
-import { BrowserProvider, ethers, JsonRpcSigner } from "ethers";
-import { Eip1193Provider } from "ethers";
+import { BrowserProvider, Contract, Eip1193Provider, ethers, JsonRpcSigner } from "ethers";
+
+import contractAbi from "./Todo.ABI.json"
 
 function formatAddress(address: string): string {
   return `${address.slice(0, 6)}...${address.slice(-4)}`
@@ -21,7 +22,8 @@ const Todo = () => {
   const [signer, setSigner] = useState<JsonRpcSigner>();
   const [provider, setProvider] = useState<BrowserProvider>();
   const [network, setNetwork] = useState({ name: 'None', id: 0n });
-  const [contract, setContract] = useState(undefined);
+  const [contractAddress, setContractAddress] = useState("");
+  const [contract, setContract] = useState<Contract>();
 
   const updateBalance = () => {
     if (!provider) return;
@@ -31,7 +33,6 @@ const Todo = () => {
       .then(amount => { setBalance(formatBalance(amount)); })
       .catch(error => setErrorMessage(error));
   }
-
   useEffect(updateBalance, [signer, provider]);
 
   const switchToSepoliaAndRequestForAccounts = async (provider: Eip1193Provider) => {
@@ -67,22 +68,40 @@ const Todo = () => {
     setButtonConnectText("Wallet connected!")
   };
 
+  const handleGetContract = async (_event: MouseEvent<HTMLButtonElement>) => {
+    try {
+      const contract = new ethers.Contract(contractAddress, contractAbi, signer);
+
+      console.log(await contract.owner());
+
+      setContract(contract);
+    } catch (error) {
+      setErrorMessage(JSON.stringify(error));
+    }
+  }
+
   return (
     <div className="Todo">
       <div className="grid grid-cols-2 gap-2 w-fit">
         <button
-          className="bg-amber-500 rounded-md p-1 block"
+          className="EditableField mt-1"
           onClick={handleConnectButtonClick}
         >
           {buttonConnectText}
         </button>
-        <div className="ReadOnlyField">
+        <div className="ReadOnlyField mt-1">
           Connected network: {`${network.name} (${network.id})`}
         </div>
         <div className="ReadOnlyField">
           Connected account: {defaultAccount}
         </div>
         <div className="ReadOnlyField">Balance: {balance}</div>
+        <div className="w-full grid col-span-2">
+          <input className="EditableField col-start-1 col-end-9"
+            placeholder="Contract Address: 0x1234...cdef"
+            onBlur={(e) => { setContractAddress(e.target.value) }} />
+          <button className="EditableField col-start-9 col-end-10 ml-1" onClick={handleGetContract}>Get</button>
+        </div>
       </div>
       <h1 className="text-red-500 block absolute bottom-12 left-0">
         {errorMessage}
