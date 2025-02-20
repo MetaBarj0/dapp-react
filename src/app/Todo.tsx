@@ -3,6 +3,7 @@
 import { MouseEvent, useEffect, useState } from "react";
 
 import { BrowserProvider, ethers, JsonRpcSigner } from "ethers";
+import { Eip1193Provider } from "ethers";
 
 function formatAddress(address: string): string {
   return `${address.slice(0, 6)}...${address.slice(-4)}`
@@ -33,20 +34,26 @@ const Todo = () => {
 
   useEffect(updateBalance, [signer, provider]);
 
-  const handleConnectButtonClick = async (_event: MouseEvent) => {
-    if (!window.ethereum) {
-      setErrorMessage("You need to install a MetaMask compatible wallet");
-      return;
-    }
-
-    await window.ethereum.request({
+  const switchToSepoliaAndRequestForAccounts = async (provider: Eip1193Provider) => {
+    await provider.request({
       method: "wallet_switchEthereumChain",
       params: [{
         chainId: `0x${11155111n.toString(16)}`
       }]
     });
 
-    await window.ethereum.request({ method: "eth_requestAccounts" });
+    await provider.request({ method: "eth_requestAccounts" });
+  }
+
+  const handleConnectButtonClick = async (_event: MouseEvent) => {
+    if (!window.ethereum) {
+      setErrorMessage("You need to install a MetaMask compatible wallet");
+
+      return;
+    }
+
+    await switchToSepoliaAndRequestForAccounts(window.ethereum);
+
     const provider = new ethers.BrowserProvider(window.ethereum);
     const network = await provider.getNetwork();
     const signers = await provider.listAccounts();
@@ -77,7 +84,7 @@ const Todo = () => {
         </div>
         <div className="ReadOnlyField">Balance: {balance}</div>
       </div>
-      <h1 className="text-red-500 block absolute bottom-0 left-0">
+      <h1 className="text-red-500 block absolute bottom-12 left-0">
         {errorMessage}
       </h1>
     </div>
