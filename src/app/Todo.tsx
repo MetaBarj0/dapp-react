@@ -8,6 +8,10 @@ function formatAddress(address: string): string {
   return `${address.slice(0, 6)}...${address.slice(-4)}`
 }
 
+function formatBalance(amount: bigint): string {
+  return `${ethers.formatEther(amount)} ETH`;
+}
+
 const Todo = () => {
   const [buttonConnectText, setButtonConnectText] = useState("Connect your wallet");
   const [errorMessage, setErrorMessage] = useState("");
@@ -15,14 +19,15 @@ const Todo = () => {
   const [balance, setBalance] = useState("0 ETH");
   const [signer, setSigner] = useState<JsonRpcSigner>();
   const [provider, setProvider] = useState<BrowserProvider>();
+  const [network, setNetwork] = useState({ name: 'None', id: 0n });
   const [contract, setContract] = useState(undefined);
 
   const updateBalance = () => {
     if (!provider) return;
     if (!signer) return;
 
-    provider.getNetwork()
-      .then(name => { console.log(name) })
+    provider.getBalance(signer)
+      .then(amount => { setBalance(formatBalance(amount)); })
       .catch(error => setErrorMessage(error));
   }
 
@@ -34,8 +39,16 @@ const Todo = () => {
       return;
     }
 
+    await window.ethereum.request({
+      method: "wallet_switchEthereumChain",
+      params: [{
+        chainId: `0x${11155111n.toString(16)}`
+      }]
+    });
+
     await window.ethereum.request({ method: "eth_requestAccounts" });
     const provider = new ethers.BrowserProvider(window.ethereum);
+    const network = await provider.getNetwork();
     const signers = await provider.listAccounts();
     const signer = signers[0];
     const address = await signers[0].getAddress();
@@ -43,18 +56,22 @@ const Todo = () => {
     setDefaultAccount(formatAddress(address));
     setProvider(provider);
     setSigner(signer);
+    setNetwork({ name: network.name, id: network.chainId });
+    setButtonConnectText("Wallet connected!")
   };
 
   return (
     <div className="Todo">
-      <h3 className="mb-4">Get/Set interaction with contract!</h3>
-      <button
-        className="bg-amber-500 rounded-md p-1 block"
-        onClick={handleConnectButtonClick}
-      >
-        {buttonConnectText}
-      </button>
       <div className="grid grid-cols-2 gap-2 w-fit">
+        <button
+          className="bg-amber-500 rounded-md p-1 block"
+          onClick={handleConnectButtonClick}
+        >
+          {buttonConnectText}
+        </button>
+        <div className="ReadOnlyField">
+          Connected network: {`${network.name} (${network.id})`}
+        </div>
         <div className="ReadOnlyField">
           Connected account: {defaultAccount}
         </div>
