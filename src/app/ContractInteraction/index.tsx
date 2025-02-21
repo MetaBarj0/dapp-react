@@ -40,7 +40,7 @@ const ContractInteraction = ({ provider, setErrorMessage }: Props) => {
         <button className="bg-amber-500 rounded-md p-1 block w-full"
           onClick={use.fetchContractInterfaceHandler}>Fetch contract Interface</button>
 
-        <Balance provider={provider} contractAddress={contractAddress} setErrorMessage={setErrorMessage} />
+        <Balance provider={provider} contractAddress={contractAddress} />
 
         <CallOwner />
       </div>

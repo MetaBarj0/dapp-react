@@ -1,25 +1,22 @@
 import { BrowserProvider } from "ethers";
-import { ethers } from "ethers";
 import { useEffect, useState } from "react";
+import useBalance from "./useBalance";
 
 type Props = {
   provider?: BrowserProvider;
   contractAddress: string;
-  setErrorMessage: (error: string) => void
 };
 
-const Balance = ({ provider, contractAddress, setErrorMessage }: Props) => {
+const Balance = ({ provider, contractAddress }: Props) => {
   const [balance, setBalance] = useState("0 ETH");
 
-  useEffect(() => {
-    if (!provider) return;
-    if (!contractAddress) return;
+  const use = useBalance({
+    provider,
+    contractAddress,
+    balance, setBalance
+  });
 
-    provider.getBalance(contractAddress)
-      .then(balance => {
-        setBalance(`${ethers.formatEther(balance)} ETH`);
-      })
-  }, [provider, contractAddress]);
+  useEffect(use.updateBalance, [provider, contractAddress]);
 
   return (
     <div>
