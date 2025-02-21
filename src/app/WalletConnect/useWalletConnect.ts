@@ -1,3 +1,4 @@
+import { JsonRpcSigner } from "ethers";
 import { BrowserProvider, ethers } from "ethers";
 import { Dispatch, SetStateAction, MouseEvent } from "react";
 
@@ -6,7 +7,8 @@ type Props = {
   setErrorMessage: Dispatch<SetStateAction<string>>,
   connectedNetwork: NetworkInfo, setConnectedNetwork: Dispatch<SetStateAction<NetworkInfo>>,
   connectedAccount: string, setConnectedAccount: Dispatch<SetStateAction<string>>,
-  accountBalance: string, setAccountBalance: Dispatch<SetStateAction<string>>
+  accountBalance: string, setAccountBalance: Dispatch<SetStateAction<string>>,
+  setSigner: Dispatch<SetStateAction<JsonRpcSigner | undefined>>
 };
 
 export default function useWalletConnect(props: Props) {
@@ -27,6 +29,7 @@ export default function useWalletConnect(props: Props) {
       props.setConnectedAccount(formatAddress(address));
       props.setConnectedNetwork({ name: network.name, chainId: network.chainId });
       props.setAccountBalance(formatBalance(balance));
+      props.setSigner(signer);
     }
   };
 

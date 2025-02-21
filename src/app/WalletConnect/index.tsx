@@ -3,14 +3,16 @@
 import { BrowserProvider } from "ethers";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import useWalletConnect from "./useWalletConnect";
+import { JsonRpcSigner } from "ethers";
 
 type Props = {
   setProvider: Dispatch<SetStateAction<BrowserProvider | undefined>>,
   provider: BrowserProvider | undefined,
-  setErrorMessage: Dispatch<SetStateAction<string>>
+  setErrorMessage: Dispatch<SetStateAction<string>>,
+  setSigner: Dispatch<SetStateAction<JsonRpcSigner | undefined>>
 };
 
-const WalletConnect = ({ setProvider, provider, setErrorMessage }: Props) => {
+const WalletConnect = ({ setProvider, provider, setErrorMessage, setSigner }: Props) => {
   const [connectedNetwork, setConnectedNetwork] = useState<{ name: string, chainId: bigint }>({ name: "Disconnected", chainId: 0n });
   const [connectedAccount, setConnectedAccount] = useState("0x0000...0000");
   const [accountBalance, setAccountBalance] = useState("0 ETH");
@@ -20,7 +22,8 @@ const WalletConnect = ({ setProvider, provider, setErrorMessage }: Props) => {
     setErrorMessage,
     connectedNetwork, setConnectedNetwork,
     connectedAccount, setConnectedAccount,
-    accountBalance, setAccountBalance
+    accountBalance, setAccountBalance,
+    setSigner
   });
 
   useEffect(() => { use.afterProviderUpdate() }, [provider])

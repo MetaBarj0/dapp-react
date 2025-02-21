@@ -1,6 +1,6 @@
 "use client";
 
-import { BrowserProvider } from "ethers";
+import { BrowserProvider, JsonRpcSigner } from "ethers";
 import { Dispatch, SetStateAction, useState } from "react";
 import Balance from "./Balance";
 import CallOwner from "./CallOwner";
@@ -8,10 +8,11 @@ import useContractInteraction from "./useContractInteraction";
 
 type Props = {
   provider?: BrowserProvider,
-  setErrorMessage: Dispatch<SetStateAction<string>>
+  setErrorMessage: Dispatch<SetStateAction<string>>,
+  signer?: JsonRpcSigner
 };
 
-const ContractInteraction = ({ provider, setErrorMessage }: Props) => {
+const ContractInteraction = ({ provider, setErrorMessage, signer }: Props) => {
   const [contractAddress, setContractAddress] = useState("");
   const [etherscanApiKey, setEtherscanApiKey] = useState("");
   const [contractAbi, setContractAbi] = useState("");
@@ -42,7 +43,11 @@ const ContractInteraction = ({ provider, setErrorMessage }: Props) => {
 
         <Balance provider={provider} contractAddress={contractAddress} />
 
-        <CallOwner />
+        <CallOwner
+          contractAddress={contractAddress}
+          contractAbi={contractAbi}
+          setErrorMessage={setErrorMessage}
+          signer={signer} />
       </div>
     </>
   );
