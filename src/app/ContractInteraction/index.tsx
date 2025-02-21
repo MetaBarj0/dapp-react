@@ -1,14 +1,14 @@
 "use client";
 
-import axios from "axios";
-import { MouseEvent, useState } from "react";
+import { BrowserProvider } from "ethers";
+import { Dispatch, SetStateAction, useState } from "react";
 import Balance from "./Balance";
 import CallOwner from "./CallOwner";
-import { BrowserProvider } from "ethers";
+import useContractInteraction from "./useContractInteraction";
 
 type Props = {
   provider?: BrowserProvider,
-  setErrorMessage: (error: string) => void;
+  setErrorMessage: Dispatch<SetStateAction<string>>
 };
 
 const ContractInteraction = ({ provider, setErrorMessage }: Props) => {
@@ -16,41 +16,13 @@ const ContractInteraction = ({ provider, setErrorMessage }: Props) => {
   const [etherscanApiKey, setEtherscanApiKey] = useState("");
   const [contractAbi, setContractAbi] = useState("");
 
-  async function fetchContractAbi() {
-    const url = `https://api-sepolia.etherscan.io/api?module=contract&action=getabi&address=${contractAddress}&apikey=${etherscanApiKey}`;
-
-    const response = await axios.get(url);
-
-    type FetchContractAbiResult = {
-      message: string,
-      result: string
-    };
-
-    const data = response.data as FetchContractAbiResult;
-
-    if (data.message === "NOTOK") {
-      setErrorMessage(data.result);
-      return "";
-    }
-
-    return data.result;
-  }
-
-  async function fetchContractInterfaceHandler(_event: MouseEvent<HTMLButtonElement>) {
-    if (etherscanApiKey.length === 0) {
-      setErrorMessage("You must provide your etherscan API key");
-      return;
-    }
-
-    if (contractAddress.length === 0) {
-      setErrorMessage("You must provide a TodoList contract address");
-      return;
-    }
-
-    setErrorMessage("");
-
-    setContractAbi(await fetchContractAbi());
-  }
+  const use = useContractInteraction({
+    provider,
+    setErrorMessage,
+    contractAddress, setContractAddress,
+    etherscanApiKey, setEtherscanApiKey,
+    contractAbi, setContractAbi
+  });
 
   return (
     <div>
@@ -66,7 +38,7 @@ const ContractInteraction = ({ provider, setErrorMessage }: Props) => {
           onBlur={(e) => { setContractAddress(e.target.value) }} />
 
         <button className="bg-amber-500 rounded-md p-1 block w-full"
-          onClick={fetchContractInterfaceHandler}>Fetch contract Interface</button>
+          onClick={use.fetchContractInterfaceHandler}>Fetch contract Interface</button>
 
         <Balance provider={provider} contractAddress={contractAddress} setErrorMessage={setErrorMessage} />
 
