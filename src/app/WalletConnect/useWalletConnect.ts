@@ -1,6 +1,7 @@
 import { JsonRpcSigner } from "ethers";
 import { BrowserProvider, ethers } from "ethers";
 import { Dispatch, SetStateAction, MouseEvent } from "react";
+import { formatAddress, formatBalance } from "@/utility/"
 
 type Props = {
   provider: BrowserProvider | undefined, setProvider: Dispatch<SetStateAction<BrowserProvider | undefined>>,
@@ -54,15 +55,6 @@ export default function useWalletConnect(props: Props) {
         props.setErrorMessage(error.message);
     }
   }
-
-  function formatBalance(amount: bigint): string {
-    return `${ethers.formatEther(amount)}`;
-  }
-
-  function formatAddress(address: string): string {
-    return `${address.slice(0, 6)}...${address.slice(-4)}`
-  }
-
 };
 
 type NetworkInfo = {

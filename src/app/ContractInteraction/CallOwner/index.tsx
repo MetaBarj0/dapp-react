@@ -23,7 +23,7 @@ const CallOwner = ({ contractAddress, contractAbi, setErrorMessage, signer }: Pr
   return (
     <div className="grid grid-cols-[20%_80%]">
       <button className="bg-blue-800 mr-2 rounded-md" onClick={use.ownerHandler}>owner</button>
-      <label className="bg-slate-800">{owner}</label>
+      <label className="bg-zinc-800">{owner}</label>
     </div>
   )
 }

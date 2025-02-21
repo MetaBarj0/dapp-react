@@ -1,5 +1,6 @@
 import { ethers, JsonRpcSigner } from "ethers";
 import { Dispatch, SetStateAction } from "react";
+import { formatAddress } from "@/utility/"
 
 type Props = {
   setOwner: Dispatch<SetStateAction<string>>,
@@ -40,8 +41,4 @@ export default function useCallOwner(props: Props) {
       }
     }
   };
-
-  function formatAddress(address: string): string {
-    return `${address.slice(0, 6)}...${address.slice(-4)}`
-  }
 }

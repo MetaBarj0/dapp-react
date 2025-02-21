@@ -1,3 +1,4 @@
+import { formatBalance } from "@/utility";
 import { BrowserProvider, ethers } from "ethers";
 import { Dispatch, SetStateAction } from "react";
 
@@ -15,7 +16,7 @@ export default function useBalance(props: Props) {
 
       props.provider.getBalance(props.contractAddress)
         .then(balance => {
-          props.setBalance(`${ethers.formatEther(balance)} ETH`);
+          props.setBalance(formatBalance(balance));
         })
     }
   };
