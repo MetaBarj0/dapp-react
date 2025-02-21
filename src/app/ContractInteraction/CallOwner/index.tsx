@@ -1,7 +1,7 @@
 const CallOwner = () => {
   return (
-    <div>
-    </div>
+    <>
+    </>
   )
 }
 

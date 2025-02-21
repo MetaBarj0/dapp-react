@@ -19,9 +19,9 @@ const Balance = ({ provider, contractAddress }: Props) => {
   useEffect(use.updateBalance, [provider, contractAddress]);
 
   return (
-    <div>
+    <>
       <label className="block mt-4 mb-4">Contract balance: {balance}</label>
-    </div>
+    </>
   )
 }
 

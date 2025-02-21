@@ -26,7 +26,7 @@ const WalletConnect = ({ setProvider, provider, setErrorMessage }: Props) => {
   useEffect(() => { use.afterProviderUpdate() }, [provider])
 
   return (
-    <div>
+    <>
       <div className="border-solid border-2 rounded-md p-1 border-gray-500">
         <label className="mb-4 block w-auto text-center">Wallet connect</label>
         <button className="bg-amber-500 rounded-md p-1 block w-full mb-4" onClick={use.walletConnectHandler}>Connect your wallet</button>
@@ -34,7 +34,7 @@ const WalletConnect = ({ setProvider, provider, setErrorMessage }: Props) => {
         <label className="block">{`Connected account: ${connectedAccount}`}</label>
         <label className="block">{`Account balance: ${accountBalance}`}</label>
       </div>
-    </div>
+    </>
   );
 }
 

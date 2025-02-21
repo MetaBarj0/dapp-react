@@ -25,7 +25,7 @@ const ContractInteraction = ({ provider, setErrorMessage }: Props) => {
   });
 
   return (
-    <div>
+    <>
       <div className="border-solid border-2 rounded-md p-1 border-gray-500">
         <label className="mb-4 block w-auto text-center">Contract Interaction</label>
 
@@ -44,7 +44,7 @@ const ContractInteraction = ({ provider, setErrorMessage }: Props) => {
 
         <CallOwner />
       </div>
-    </div>
+    </>
   );
 }
 
