@@ -12,6 +12,7 @@ type Props = {
 const CallOwner = ({ contractAddress, contractAbi, setErrorMessage, signer }: Props) => {
   const [owner, setOwner] = useState("");
 
+  // TODO: spread object
   const use = useCallOwner({
     setOwner,
     contractAddress,

@@ -4,6 +4,8 @@ import { BrowserProvider, JsonRpcSigner } from "ethers";
 import { Dispatch, SetStateAction, useState } from "react";
 import Balance from "./Balance";
 import CallOwner from "./CallOwner";
+import Tasks from "./Tasks"
+
 import useContractInteraction from "./useContractInteraction";
 
 type Props = {
@@ -43,7 +45,14 @@ const ContractInteraction = ({ provider, setErrorMessage, signer }: Props) => {
 
         <Balance provider={provider} contractAddress={contractAddress} />
 
+        {/* TODO: rename to Owner */}
         <CallOwner
+          contractAddress={contractAddress}
+          contractAbi={contractAbi}
+          setErrorMessage={setErrorMessage}
+          signer={signer} />
+
+        <Tasks
           contractAddress={contractAddress}
           contractAbi={contractAbi}
           setErrorMessage={setErrorMessage}
