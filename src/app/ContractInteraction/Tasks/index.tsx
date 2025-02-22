@@ -1,15 +1,5 @@
-import { JsonRpcSigner } from "ethers";
-import { Dispatch, SetStateAction, useState } from "react";
-import useTasks, { Task } from "./useTasks"
-
-// TODO: find out a way to dedupe Props type definition in component and
-//       useComponent.
-type Props = {
-  contractAddress: string,
-  contractAbi: string,
-  setErrorMessage: Dispatch<SetStateAction<string>>,
-  signer?: JsonRpcSigner
-};
+import { useState } from "react";
+import useTasks, { Props, Task } from "./useTasks";
 
 const Tasks = (props: Props) => {
   const [taskId, setTaskId] = useState(0n);

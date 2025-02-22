@@ -1,11 +1,10 @@
 "use client";
 
-import { BrowserProvider } from "ethers";
+import { BrowserProvider, JsonRpcSigner } from "ethers";
 import { useState } from "react";
 import ContractInteraction from "./ContractInteraction";
 import ErrorMessage from "./ErrorMessage";
 import WalletConnect from "./WalletConnect";
-import { JsonRpcSigner } from "ethers";
 
 const TodoList = () => {
   const [errorMessage, setErrorMessage] = useState("");
@@ -25,7 +24,7 @@ const TodoList = () => {
         setErrorMessage={setErrorMessage}
         signer={signer} />
 
-      <ErrorMessage getErrorMessage={() => errorMessage} />
+      <ErrorMessage errorMessage={errorMessage} />
     </div>
   );
 };

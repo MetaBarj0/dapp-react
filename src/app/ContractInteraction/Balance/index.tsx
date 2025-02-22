@@ -1,22 +1,15 @@
-import { BrowserProvider } from "ethers";
 import { useEffect, useState } from "react";
-import useBalance from "./useBalance";
+import useBalance, { Props } from "./useBalance";
 
-type Props = {
-  provider?: BrowserProvider;
-  contractAddress: string;
-};
-
-const Balance = ({ provider, contractAddress }: Props) => {
+const Balance = (props: Props) => {
   const [balance, setBalance] = useState("0 ETH");
 
   const use = useBalance({
-    provider,
-    contractAddress,
+    ...props,
     balance, setBalance
   });
 
-  useEffect(use.updateBalance, [provider, contractAddress]);
+  useEffect(use.updateBalance, [props.provider, props.contractAddress]);
 
   return (
     <>

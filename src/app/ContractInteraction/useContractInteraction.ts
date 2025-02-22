@@ -1,16 +1,14 @@
 import axios from "axios";
-import { BrowserProvider } from "ethers";
+import { BrowserProvider, JsonRpcSigner } from "ethers";
 import { Dispatch, MouseEvent, SetStateAction } from "react";
 
-type Props = {
-  provider: BrowserProvider | undefined,
+export type Props = {
+  provider?: BrowserProvider,
   setErrorMessage: Dispatch<SetStateAction<string>>,
-  contractAddress: string, setContractAddress: Dispatch<SetStateAction<string>>,
-  etherscanApiKey: string, setEtherscanApiKey: Dispatch<SetStateAction<string>>,
-  contractAbi: string, setContractAbi: Dispatch<SetStateAction<string>>
+  signer?: JsonRpcSigner
 };
 
-export default function useContractInteraction(props: Props) {
+export default function useContractInteraction(props: Props & States) {
   return {
     fetchContractInterfaceHandler: async (_event: MouseEvent<HTMLButtonElement>) => {
       if (props.etherscanApiKey.length === 0) {
@@ -49,3 +47,9 @@ export default function useContractInteraction(props: Props) {
     return data.result;
   }
 }
+
+type States = {
+  contractAddress: string, setContractAddress: Dispatch<SetStateAction<string>>,
+  etherscanApiKey: string, setEtherscanApiKey: Dispatch<SetStateAction<string>>,
+  contractAbi: string, setContractAbi: Dispatch<SetStateAction<string>>
+};

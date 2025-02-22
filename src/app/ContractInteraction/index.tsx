@@ -1,27 +1,18 @@
 "use client";
 
-import { BrowserProvider, JsonRpcSigner } from "ethers";
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 import Balance from "./Balance";
-import CallOwner from "./CallOwner";
-import Tasks from "./Tasks"
+import Owner from "./Owner";
+import Tasks from "./Tasks";
+import useContractInteraction, { Props } from "./useContractInteraction";
 
-import useContractInteraction from "./useContractInteraction";
-
-type Props = {
-  provider?: BrowserProvider,
-  setErrorMessage: Dispatch<SetStateAction<string>>,
-  signer?: JsonRpcSigner
-};
-
-const ContractInteraction = ({ provider, setErrorMessage, signer }: Props) => {
+const ContractInteraction = (props: Props) => {
   const [contractAddress, setContractAddress] = useState("");
   const [etherscanApiKey, setEtherscanApiKey] = useState("");
   const [contractAbi, setContractAbi] = useState("");
 
   const use = useContractInteraction({
-    provider,
-    setErrorMessage,
+    ...props,
     contractAddress, setContractAddress,
     etherscanApiKey, setEtherscanApiKey,
     contractAbi, setContractAbi
@@ -43,20 +34,19 @@ const ContractInteraction = ({ provider, setErrorMessage, signer }: Props) => {
         <button className="bg-amber-500 rounded-md p-1 block w-full"
           onClick={use.fetchContractInterfaceHandler}>Fetch contract Interface</button>
 
-        <Balance provider={provider} contractAddress={contractAddress} />
+        <Balance provider={props.provider} contractAddress={contractAddress} />
 
-        {/* TODO: rename to Owner */}
-        <CallOwner
+        <Owner
           contractAddress={contractAddress}
           contractAbi={contractAbi}
-          setErrorMessage={setErrorMessage}
-          signer={signer} />
+          setErrorMessage={props.setErrorMessage}
+          signer={props.signer} />
 
         <Tasks
           contractAddress={contractAddress}
           contractAbi={contractAbi}
-          setErrorMessage={setErrorMessage}
-          signer={signer} />
+          setErrorMessage={props.setErrorMessage}
+          signer={props.signer} />
       </div>
     </>
   );

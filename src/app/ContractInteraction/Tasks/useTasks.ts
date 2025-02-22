@@ -1,13 +1,11 @@
 import { ethers, JsonRpcSigner } from "ethers";
 import { Dispatch, SetStateAction } from "react";
 
-type Props = {
+export type Props = {
   contractAddress: string,
   contractAbi: string,
   setErrorMessage: Dispatch<SetStateAction<string>>,
-  signer?: JsonRpcSigner,
-  taskId: bigint,
-  setTask: Dispatch<SetStateAction<Task | undefined>>
+  signer?: JsonRpcSigner
 };
 
 export type Task = {
@@ -15,7 +13,7 @@ export type Task = {
   definition: string
 };
 
-export default function useTasks(props: Props) {
+export default function useTasks(props: Props & States) {
   return {
     tasksHandler: async () => {
       if (!props.contractAddress) {
@@ -49,3 +47,8 @@ export default function useTasks(props: Props) {
     }
   };
 }
+
+type States = {
+  taskId: bigint,
+  setTask: Dispatch<SetStateAction<Task | undefined>>
+};

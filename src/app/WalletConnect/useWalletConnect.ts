@@ -4,15 +4,13 @@ import { Dispatch, SetStateAction, MouseEvent } from "react";
 import { formatAddress, formatBalance } from "@/utility/"
 
 type Props = {
-  provider: BrowserProvider | undefined, setProvider: Dispatch<SetStateAction<BrowserProvider | undefined>>,
+  setProvider: Dispatch<SetStateAction<BrowserProvider | undefined>>,
+  provider: BrowserProvider | undefined,
   setErrorMessage: Dispatch<SetStateAction<string>>,
-  connectedNetwork: NetworkInfo, setConnectedNetwork: Dispatch<SetStateAction<NetworkInfo>>,
-  connectedAccount: string, setConnectedAccount: Dispatch<SetStateAction<string>>,
-  accountBalance: string, setAccountBalance: Dispatch<SetStateAction<string>>,
   setSigner: Dispatch<SetStateAction<JsonRpcSigner | undefined>>
 };
 
-export default function useWalletConnect(props: Props) {
+export default function useWalletConnect(props: Props & States) {
   return {
     walletConnectHandler: async (_event: MouseEvent<HTMLButtonElement>) => {
       await switchWalletNetworkToSepolia();
@@ -60,4 +58,10 @@ export default function useWalletConnect(props: Props) {
 type NetworkInfo = {
   name: string,
   chainId: bigint
+};
+
+type States = {
+  connectedNetwork: NetworkInfo, setConnectedNetwork: Dispatch<SetStateAction<NetworkInfo>>,
+  connectedAccount: string, setConnectedAccount: Dispatch<SetStateAction<string>>,
+  accountBalance: string, setAccountBalance: Dispatch<SetStateAction<string>>
 };

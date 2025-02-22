@@ -2,15 +2,14 @@ import { ethers, JsonRpcSigner } from "ethers";
 import { Dispatch, SetStateAction } from "react";
 import { formatAddress } from "@/utility/"
 
-type Props = {
-  setOwner: Dispatch<SetStateAction<string>>,
+export type Props = {
   contractAddress: string,
   contractAbi: string,
   setErrorMessage: Dispatch<SetStateAction<string>>,
   signer?: JsonRpcSigner
 };
 
-export default function useCallOwner(props: Props) {
+export default function useOwner(props: Props & States) {
   return {
     ownerHandler: async () => {
       try {
@@ -42,3 +41,8 @@ export default function useCallOwner(props: Props) {
     }
   };
 }
+
+// TODO: move internal stuff at the end of file
+type States = {
+  setOwner: Dispatch<SetStateAction<string>>,
+};
