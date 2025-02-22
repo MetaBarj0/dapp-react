@@ -15,7 +15,7 @@ const Tasks = (props: Props) => {
     <div className="grid grid-cols-[20%_20%_60%] mt-2">
       <button className="bg-blue-800 mr-2 rounded-md" onClick={use.tasksHandler}>tasks</button>
 
-      <input type="number" defaultValue={0}
+      <input type="number" min={0} defaultValue={0}
         className="w-full rounded-md bg-gray-800 fg-gray-500"
         onBlur={e => { setTaskId(BigInt(e.target.value)); }} />
 

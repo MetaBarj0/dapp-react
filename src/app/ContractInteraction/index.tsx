@@ -4,6 +4,7 @@ import { useState } from "react";
 import Balance from "./Balance";
 import Owner from "./Owner";
 import Tasks from "./Tasks";
+import DeletedTasks from "./DeletedTasks";
 import useContractInteraction, { Props } from "./useContractInteraction";
 
 const ContractInteraction = (props: Props) => {
@@ -43,6 +44,12 @@ const ContractInteraction = (props: Props) => {
           signer={props.signer} />
 
         <Tasks
+          contractAddress={contractAddress}
+          contractAbi={contractAbi}
+          setErrorMessage={props.setErrorMessage}
+          signer={props.signer} />
+
+        <DeletedTasks
           contractAddress={contractAddress}
           contractAbi={contractAbi}
           setErrorMessage={props.setErrorMessage}
