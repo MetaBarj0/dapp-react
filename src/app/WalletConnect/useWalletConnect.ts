@@ -3,7 +3,7 @@ import { BrowserProvider, ethers } from "ethers";
 import { Dispatch, SetStateAction, MouseEvent } from "react";
 import { formatAddress, formatBalance } from "@/utility/"
 
-type Props = {
+export type Props = {
   setProvider: Dispatch<SetStateAction<BrowserProvider | undefined>>,
   provider: BrowserProvider | undefined,
   setErrorMessage: Dispatch<SetStateAction<string>>,

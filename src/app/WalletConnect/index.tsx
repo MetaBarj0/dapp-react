@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import useWalletConnect from "./useWalletConnect";
+import useWalletConnect, { Props } from "./useWalletConnect";
 
 const WalletConnect = (props: Props) => {
   const [connectedNetwork, setConnectedNetwork] = useState<{ name: string, chainId: bigint }>({ name: "Disconnected", chainId: 0n });
