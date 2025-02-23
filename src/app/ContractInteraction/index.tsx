@@ -5,6 +5,7 @@ import Balance from "./Balance";
 import Owner from "./Owner";
 import Tasks from "./Tasks";
 import DeletedTasks from "./DeletedTasks";
+import CreateTask from "./CreateTask";
 import useContractInteraction, { Props } from "./useContractInteraction";
 
 const ContractInteraction = (props: Props) => {
@@ -43,6 +44,7 @@ const ContractInteraction = (props: Props) => {
           setErrorMessage={props.setErrorMessage}
           signer={props.signer} />
 
+        {/* TODO: signer not necessary here */}
         <Tasks
           contractAddress={contractAddress}
           contractAbi={contractAbi}
@@ -54,6 +56,14 @@ const ContractInteraction = (props: Props) => {
           contractAbi={contractAbi}
           setErrorMessage={props.setErrorMessage}
           signer={props.signer} />
+
+        <CreateTask
+          contractAddress={contractAddress}
+          contractAbi={contractAbi}
+          setErrorMessage={props.setErrorMessage}
+          signer={props.signer}
+          provider={props.provider}
+        />
       </div>
     </>
   );
