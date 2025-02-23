@@ -2,10 +2,10 @@ import { BrowserProvider, ethers, JsonRpcSigner } from "ethers";
 import { Dispatch, SetStateAction } from "react";
 
 export type Props = {
-  contractAddress?: string,
-  contractAbi?: string,
-  provider?: BrowserProvider,
-  signer?: JsonRpcSigner,
+  contractAddress: string,
+  contractAbi: string,
+  provider: BrowserProvider,
+  signer: JsonRpcSigner,
   setErrorMessage: Dispatch<SetStateAction<string>>
 };
 
@@ -13,25 +13,6 @@ export default function useCreateTask(props: Props & State) {
   return {
     // TODO: remove unecessary _events on handlers
     createTaskHandler: async () => {
-      // TODO: refactor the way props are verified regarding undefined state
-      if (!props.contractAddress) {
-        props.setErrorMessage("You must set a contract address");
-
-        return;
-      }
-
-      if (!props.contractAbi) {
-        props.setErrorMessage("You must fetch contract interface first");
-
-        return;
-      }
-
-      if (!props.signer || !props.provider) {
-        props.setErrorMessage("You must connect your wallet first");
-
-        return;
-      }
-
       if (!props.taskDefinition) {
         props.setErrorMessage("You must set a task definition");
 

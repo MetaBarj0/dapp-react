@@ -3,7 +3,7 @@ import { BrowserProvider, ethers } from "ethers";
 import { Dispatch, SetStateAction } from "react";
 
 export type Props = {
-  provider?: BrowserProvider;
+  provider: BrowserProvider;
   contractAddress: string;
 };
 
@@ -14,9 +14,6 @@ type States = {
 export default function useBalance(props: Props & States) {
   return {
     updateBalance: () => {
-      if (!props.provider) return;
-      if (!props.contractAddress) return;
-
       props.provider.getBalance(props.contractAddress)
         .then(balance => {
           props.setBalance(formatBalance(balance));

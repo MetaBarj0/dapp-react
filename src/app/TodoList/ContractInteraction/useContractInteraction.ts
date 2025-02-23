@@ -3,9 +3,9 @@ import { BrowserProvider, JsonRpcSigner } from "ethers";
 import { Dispatch, MouseEvent, SetStateAction } from "react";
 
 export type Props = {
-  provider?: BrowserProvider,
+  provider: BrowserProvider,
   setErrorMessage: Dispatch<SetStateAction<string>>,
-  signer?: JsonRpcSigner
+  signer: JsonRpcSigner
 };
 
 export default function useContractInteraction(props: Props & States) {

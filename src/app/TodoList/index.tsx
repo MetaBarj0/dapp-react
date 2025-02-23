@@ -19,10 +19,10 @@ const TodoList = () => {
         setErrorMessage={setErrorMessage}
         setSigner={setSigner} />
 
-      <ContractInteraction
+      {signer && provider && <ContractInteraction
         provider={provider}
         setErrorMessage={setErrorMessage}
-        signer={signer} />
+        signer={signer} />}
 
       <ErrorMessage errorMessage={errorMessage} />
     </div>

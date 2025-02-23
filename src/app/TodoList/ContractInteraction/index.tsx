@@ -36,34 +36,34 @@ const ContractInteraction = (props: Props) => {
         <button className="bg-amber-500 rounded-md p-1 block w-full"
           onClick={use.fetchContractInterfaceHandler}>Fetch contract Interface</button>
 
-        <Balance provider={props.provider} contractAddress={contractAddress} />
+        {contractAbi && <Balance provider={props.provider} contractAddress={contractAddress} />}
 
-        <Owner
+        {contractAbi && <Owner
           contractAddress={contractAddress}
           contractAbi={contractAbi}
           setErrorMessage={props.setErrorMessage}
-          signer={props.signer} />
+          signer={props.signer} />}
 
         {/* TODO: signer not necessary here */}
-        <Tasks
+        {contractAbi && <Tasks
           contractAddress={contractAddress}
           contractAbi={contractAbi}
           setErrorMessage={props.setErrorMessage}
-          signer={props.signer} />
+          signer={props.signer} />}
 
-        <DeletedTasks
+        {contractAbi && <DeletedTasks
           contractAddress={contractAddress}
           contractAbi={contractAbi}
           setErrorMessage={props.setErrorMessage}
-          signer={props.signer} />
+          signer={props.signer} />}
 
-        <CreateTask
+        {contractAbi && <CreateTask
           contractAddress={contractAddress}
           contractAbi={contractAbi}
           setErrorMessage={props.setErrorMessage}
           signer={props.signer}
           provider={props.provider}
-        />
+        />}
       </div>
     </>
   );
