@@ -7,6 +7,7 @@ import Tasks from "./Tasks";
 import DeletedTasks from "./DeletedTasks";
 import CreateTask from "./CreateTask";
 import ModifyTask from "./ModifyTask";
+import DeleteTask from "./DeleteTask";
 import useContractInteraction, { Props } from "./useContractInteraction";
 
 const ContractInteraction = (props: Props) => {
@@ -68,6 +69,14 @@ const ContractInteraction = (props: Props) => {
         />}
 
         {contractAbi && <ModifyTask
+          contractAddress={contractAddress}
+          contractAbi={contractAbi}
+          setErrorMessage={props.setErrorMessage}
+          signer={props.signer}
+          provider={props.provider}
+        />}
+
+        {contractAbi && <DeleteTask
           contractAddress={contractAddress}
           contractAbi={contractAbi}
           setErrorMessage={props.setErrorMessage}
