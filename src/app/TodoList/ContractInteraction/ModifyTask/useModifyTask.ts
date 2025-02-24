@@ -9,24 +9,23 @@ export type Props = {
   setErrorMessage: Dispatch<SetStateAction<string>>
 };
 
-// TODO: 2 args for props and states
-export default function useCreateTask(props: Props & State) {
+export default function useCreateTask(props: Props, states: State) {
   return {
     // TODO: remove unecessary _events on handlers
     createTaskHandler: async () => {
-      if (props.taskId === undefined) {
+      if (states.taskId === undefined) {
         props.setErrorMessage("You must provide a task id to modify");
 
         return;
       }
 
-      if (!props.taskDefinition) {
+      if (!states.taskDefinition) {
         props.setErrorMessage("You must set a task definition");
 
         return;
       }
 
-      if (!props.taskStatus) {
+      if (!states.taskStatus) {
         props.setErrorMessage("You must set a task status");
 
         return;
@@ -36,7 +35,7 @@ export default function useCreateTask(props: Props & State) {
       const newGasPrice = feeData.gasPrice! * 15n / 10n;
 
       const contract = new ethers.Contract(props.contractAddress, props.contractAbi, props.signer);
-      const estimatedGas = await contract.modifyTask.estimateGas(props.taskId, props.taskDefinition, props.taskStatus);
+      const estimatedGas = await contract.modifyTask.estimateGas(states.taskId, states.taskDefinition, states.taskStatus);
 
       const options = {
         gasPrice: newGasPrice,
@@ -44,17 +43,17 @@ export default function useCreateTask(props: Props & State) {
       }
 
       const tx = await contract.modifyTask(
-        props.taskId,
-        props.taskDefinition,
-        props.taskStatus,
+        states.taskId,
+        states.taskDefinition,
+        states.taskStatus,
         options
       );
 
-      props.setTaskModificationResult("modifying task...")
+      states.setTaskModificationResult("modifying task...")
 
       await tx.wait();
 
-      props.setTaskModificationResult("Task modified!")
+      states.setTaskModificationResult("Task modified!")
     }
   };
 }

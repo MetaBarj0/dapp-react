@@ -5,11 +5,12 @@ const CreateTask = (props: Props) => {
   const [taskDefinition, setTaskDefinition] = useState("");
   const [taskCreationResult, setTaskCreationResult] = useState("");
 
-  const use = useCreateTask({
-    ...props,
-    taskDefinition,
-    setTaskCreationResult
-  });
+  const use = useCreateTask(
+    props,
+    {
+      taskDefinition,
+      setTaskCreationResult
+    });
 
   return (
     <div className="grid grid-cols-[25%_37%_38%] mt-2">

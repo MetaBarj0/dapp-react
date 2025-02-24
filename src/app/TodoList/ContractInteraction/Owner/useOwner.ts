@@ -9,13 +9,13 @@ export type Props = {
   signer: JsonRpcSigner
 };
 
-export default function useOwner(props: Props & States) {
+export default function useOwner(props: Props, states: States) {
   return {
     ownerHandler: async () => {
       try {
         const contract = new ethers.Contract(props.contractAddress, props.contractAbi, props.signer);
 
-        props.setOwner(formatAddress(await contract.owner()));
+        states.setOwner(formatAddress(await contract.owner()));
       } catch (error) {
         if (error instanceof Object && "message" in error && typeof error.message === "string")
           props.setErrorMessage(error.message);

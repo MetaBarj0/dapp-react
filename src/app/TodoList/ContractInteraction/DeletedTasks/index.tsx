@@ -5,12 +5,14 @@ const DeletedTasks = (props: Props) => {
   const [taskId, setTaskId] = useState(0n);
   const [deletedTask, setDeletedTask] = useState<boolean>();
 
-  const use = useDeletedTasks({
-    taskId,
-    setDeletedTask,
-    deletedTask,
-    ...props
-  });
+  const use = useDeletedTasks(
+    props,
+    {
+      taskId,
+      setDeletedTask,
+      deletedTask
+    }
+  );
 
   return (
     <div className="grid grid-cols-[30%_20%_50%] mt-2">

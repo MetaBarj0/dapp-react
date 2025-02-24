@@ -8,12 +8,13 @@ const WalletConnect = (props: Props) => {
   const [connectedAccount, setConnectedAccount] = useState("0x0000...0000");
   const [accountBalance, setAccountBalance] = useState("0 ETH");
 
-  const use = useWalletConnect({
-    ...props,
-    connectedNetwork, setConnectedNetwork,
-    connectedAccount, setConnectedAccount,
-    accountBalance, setAccountBalance,
-  });
+  const use = useWalletConnect(
+    props,
+    {
+      connectedNetwork, setConnectedNetwork,
+      connectedAccount, setConnectedAccount,
+      accountBalance, setAccountBalance
+    });
 
   useEffect(() => { use.afterProviderUpdate() }, [props.provider])
 

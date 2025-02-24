@@ -4,10 +4,7 @@ import useOwner, { Props } from "./useOwner";
 const Owner = (props: Props) => {
   const [owner, setOwner] = useState("");
 
-  const use = useOwner({
-    setOwner,
-    ...props
-  });
+  const use = useOwner(props, { setOwner });
 
   return (
     <div className="grid grid-cols-[20%_80%]">

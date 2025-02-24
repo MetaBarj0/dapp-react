@@ -8,15 +8,15 @@ export type Props = {
   signer: JsonRpcSigner
 };
 
-export default function useTasks(props: Props & States) {
+export default function useTasks(props: Props, states: States) {
   return {
     tasksHandler: async () => {
       const contract = new ethers.Contract(props.contractAddress, props.contractAbi, props.signer);
 
-      props.setDeletedTask(await contract.deletedTasks(props.taskId));
+      states.setDeletedTask(await contract.deletedTasks(states.taskId));
     },
 
-    formatDeletedTask: () => props.deletedTask === undefined ? "" : props.deletedTask ? "true" : "false"
+    formatDeletedTask: () => states.deletedTask === undefined ? "" : states.deletedTask ? "true" : "false"
   };
 }
 

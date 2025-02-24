@@ -14,19 +14,19 @@ export type Task = {
   status: string
 };
 
-export default function useTasks(props: Props & States) {
+export default function useTasks(props: Props, states: States) {
   return {
     tasksHandler: async () => {
       const contract = new ethers.Contract(props.contractAddress, props.contractAbi, props.signer);
 
-      const task = await contract.tasks(props.taskId)
+      const task = await contract.tasks(states.taskId)
         .catch(_error => {
           props.setErrorMessage("Unexisting task");
         });
 
       if (!task) return;
 
-      props.setTask({
+      states.setTask({
         date: new Date(Number(task.timestamp) * 1000),
         definition: task.definition,
         status: formatStatus(task.status)

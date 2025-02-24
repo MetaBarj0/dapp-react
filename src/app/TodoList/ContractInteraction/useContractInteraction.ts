@@ -8,25 +8,26 @@ export type Props = {
   signer: JsonRpcSigner
 };
 
-export default function useContractInteraction(props: Props & States) {
+export default function useContractInteraction(props: Props, states: States) {
   return {
     fetchContractInterfaceHandler: async (_event: MouseEvent<HTMLButtonElement>) => {
-      if (props.etherscanApiKey.length === 0) {
+      if (states.etherscanApiKey.length === 0) {
         props.setErrorMessage("You must provide your etherscan API key");
         return;
       }
 
-      if (props.contractAddress.length === 0) {
+      if (states.contractAddress.length === 0) {
         props.setErrorMessage("You must provide a TodoList contract address");
         return;
       }
 
-      props.setContractAbi(await fetchContractAbi());
+      states.setContractAbi(await fetchContractAbi());
     }
   };
 
   async function fetchContractAbi() {
-    const url = `https://api-sepolia.etherscan.io/api?module=contract&action=getabi&address=${props.contractAddress}&apikey=${props.etherscanApiKey}`;
+    const url =
+      `https://api-sepolia.etherscan.io/api?module=contract&action=getabi&address=${states.contractAddress}&apikey=${states.etherscanApiKey}`;
 
     const response = await axios.get(url);
 

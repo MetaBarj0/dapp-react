@@ -14,12 +14,13 @@ const ContractInteraction = (props: Props) => {
   const [etherscanApiKey, setEtherscanApiKey] = useState("");
   const [contractAbi, setContractAbi] = useState("");
 
-  const use = useContractInteraction({
-    ...props,
-    contractAddress, setContractAddress,
-    etherscanApiKey, setEtherscanApiKey,
-    contractAbi, setContractAbi
-  });
+  const use = useContractInteraction(
+    props,
+    {
+      contractAddress, setContractAddress,
+      etherscanApiKey, setEtherscanApiKey,
+      contractAbi, setContractAbi
+    });
 
   return (
     <>

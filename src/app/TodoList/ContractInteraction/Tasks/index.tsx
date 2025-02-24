@@ -5,11 +5,7 @@ const Tasks = (props: Props) => {
   const [taskId, setTaskId] = useState(0n);
   const [task, setTask] = useState<Task>();
 
-  const use = useTasks({
-    taskId,
-    setTask,
-    ...props
-  });
+  const use = useTasks(props, { taskId, setTask });
 
   return (
     <div className="grid grid-cols-[20%_20%_60%] mt-2">

@@ -10,7 +10,7 @@ export type Props = {
   setSigner: Dispatch<SetStateAction<JsonRpcSigner | undefined>>
 };
 
-export default function useWalletConnect(props: Props & States) {
+export default function useWalletConnect(props: Props, states: States) {
   return {
     walletConnectHandler: async (_event: MouseEvent<HTMLButtonElement>) => {
       await switchWalletNetworkToSepolia();
@@ -25,9 +25,9 @@ export default function useWalletConnect(props: Props & States) {
       const address = await signer.getAddress();
       const balance = await props.provider.getBalance(signer);
 
-      props.setConnectedAccount(formatAddress(address));
-      props.setConnectedNetwork({ name: network.name, chainId: network.chainId });
-      props.setAccountBalance(formatBalance(balance));
+      states.setConnectedAccount(formatAddress(address));
+      states.setConnectedNetwork({ name: network.name, chainId: network.chainId });
+      states.setAccountBalance(formatBalance(balance));
       props.setSigner(signer);
     }
   };

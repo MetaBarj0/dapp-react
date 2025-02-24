@@ -2,18 +2,19 @@ import { useState } from "react";
 import useModifyTask, { Props } from "./useModifyTask"
 
 const ModifyTask = (props: Props) => {
-  const [taskId, setTaskId] = useState<bigint>();
+  const [taskId, setTaskId] = useState<bigint>(0n);
   const [taskDefinition, setTaskDefinition] = useState("");
   const [taskStatus, setTaskStatus] = useState<number>();
   const [taskModificationResult, setTaskModificationResult] = useState("");
 
-  const use = useModifyTask({
-    ...props,
-    taskId,
-    taskDefinition,
-    taskStatus,
-    setTaskModificationResult
-  });
+  const use = useModifyTask(
+    props,
+    {
+      taskId,
+      taskDefinition,
+      taskStatus,
+      setTaskModificationResult
+    });
 
   return (
     <div className="grid grid-cols-[25%_37%_38%] mt-2">
