@@ -21,6 +21,7 @@ export default function useContractInteraction(props: Props, states: States) {
         return;
       }
 
+      // TODO: ensure the ABI is a TodoList contract
       states.setContractAbi(await fetchContractAbi());
     }
   };

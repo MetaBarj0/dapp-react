@@ -22,6 +22,7 @@ export default function useCreateTask(props: Props, states: State) {
       const feeData = await props.provider.getFeeData();
       const newGasPrice = feeData.gasPrice! * 15n / 10n;
 
+      // TODO: estimate and gas fee multiplier should be in WalletConnect
       const contract = new ethers.Contract(props.contractAddress, props.contractAbi, props.signer);
       const estimatedGas = await contract.deleteTask.estimateGas(states.taskId);
 
@@ -30,7 +31,7 @@ export default function useCreateTask(props: Props, states: State) {
         gasLimit: estimatedGas * 11n / 10n,
       }
 
-      // TODO: try/catch tx
+      // TODO: try/catch tx for clear error handling
       const tx = await contract.deleteTask(states.taskId, options);
 
       states.setTaskCreationResult("deleting task...")

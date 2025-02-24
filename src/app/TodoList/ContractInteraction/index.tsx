@@ -39,6 +39,7 @@ const ContractInteraction = (props: Props) => {
         <button className="bg-amber-500 rounded-md p-1 block w-full"
           onClick={use.fetchContractInterfaceHandler}>Fetch contract Interface</button>
 
+        {/* TODO: only one global condition for component rendering*/}
         {contractAbi && <Balance provider={props.provider} contractAddress={contractAddress} />}
 
         {contractAbi && <Owner

@@ -18,7 +18,6 @@ const WalletConnect = (props: Props) => {
 
   useEffect(() => { use.afterProviderUpdate() }, [props.provider])
 
-  // TODO: class refactoring
   return (
     <>
       <div className="border-solid border-2 rounded-md p-1 border-gray-500">
