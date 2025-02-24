@@ -19,7 +19,7 @@ const Tasks = (props: Props) => {
         className="w-full rounded-md bg-gray-800 fg-gray-500"
         onBlur={e => { setTaskId(BigInt(e.target.value)); }} />
 
-      <label className="bg-zinc-800 ml-2">{use.formatTask(task)}</label>
+      <label className="bg-zinc-800 ml-2 whitespace-pre-wrap">{use.formatTask(task)}</label>
     </div>
   );
 }

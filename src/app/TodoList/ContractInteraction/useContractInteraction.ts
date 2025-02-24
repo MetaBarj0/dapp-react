@@ -21,8 +21,6 @@ export default function useContractInteraction(props: Props & States) {
         return;
       }
 
-      props.setErrorMessage("");
-
       props.setContractAbi(await fetchContractAbi());
     }
   };

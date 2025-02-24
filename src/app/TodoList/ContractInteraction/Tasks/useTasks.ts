@@ -9,10 +9,9 @@ export type Props = {
 };
 
 export type Task = {
-  id: bigint,
-  timestamp: bigint,
+  date: Date,
   definition: string,
-  status: number
+  status: string
 };
 
 export default function useTasks(props: Props & States) {
@@ -24,12 +23,26 @@ export default function useTasks(props: Props & States) {
         .catch(_error => {
           props.setErrorMessage("Unexisting task");
         });
+
+      if (!task) return;
+
+      props.setTask({
+        date: new Date(Number(task.timestamp) * 1000),
+        definition: task.definition,
+        status: formatStatus(task.status)
+      });
     },
 
     formatTask: (task: Task | undefined) => {
-      return "";
+      if (!task) return "";
+
+      return JSON.stringify(task, null, 2);
     }
   };
+}
+
+function formatStatus(status: bigint) {
+  return status === 0n ? "todo" : status === 1n ? "doing" : "done";
 }
 
 type States = {
