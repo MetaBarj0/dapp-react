@@ -16,7 +16,7 @@ const WalletConnect = (props: Props) => {
       accountBalance, setAccountBalance
     });
 
-  useEffect(() => { use.afterProviderUpdate() }, [props.provider])
+  useEffect(() => { use.initializeWalletInfo() }, [use])
 
   return (
     <>

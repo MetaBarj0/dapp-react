@@ -20,7 +20,7 @@ export default function useTasks(props: Props, states: States) {
       const contract = new ethers.Contract(props.contractAddress, props.contractAbi, props.signer);
 
       const task = await contract.tasks(states.taskId)
-        .catch(_error => {
+        .catch(() => {
           props.setErrorMessage("Unexisting task");
         });
 

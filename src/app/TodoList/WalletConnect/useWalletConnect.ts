@@ -1,7 +1,6 @@
-import { JsonRpcSigner } from "ethers";
-import { BrowserProvider, ethers } from "ethers";
-import { Dispatch, SetStateAction, MouseEvent } from "react";
-import { formatAddress, formatBalance } from "@/utility/"
+import { formatAddress, formatBalance } from "@/utility/";
+import { BrowserProvider, ethers, JsonRpcSigner } from "ethers";
+import { Dispatch, SetStateAction } from "react";
 
 export type Props = {
   setProvider: Dispatch<SetStateAction<BrowserProvider | undefined>>,
@@ -12,11 +11,11 @@ export type Props = {
 
 export default function useWalletConnect(props: Props, states: States) {
   return {
-    walletConnectHandler: async (_event: MouseEvent<HTMLButtonElement>) => {
+    walletConnectHandler: async () => {
       await switchWalletNetworkToSepolia();
     },
 
-    afterProviderUpdate: async () => {
+    initializeWalletInfo: async () => {
       if (!props.provider) return;
 
       const network = await props.provider.getNetwork();

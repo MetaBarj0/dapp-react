@@ -6,9 +6,7 @@ const Balance = (props: Props) => {
 
   const use = useBalance(props, { balance, setBalance });
 
-  const updateBalance = use.updateBalance;
-
-  useEffect(() => updateBalance, [updateBalance]);
+  useEffect(() => { use.updateBalance(); }, [use]);
 
   return (
     <>

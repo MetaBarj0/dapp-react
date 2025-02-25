@@ -13,11 +13,10 @@ type States = {
 
 export default function useBalance(props: Props, states: States) {
   return {
-    updateBalance: () => {
-      props.provider.getBalance(props.contractAddress)
-        .then(balance => {
-          states.setBalance(formatBalance(balance));
-        })
+    updateBalance: async () => {
+      const balance = await props.provider.getBalance(props.contractAddress);
+
+      states.setBalance(formatBalance(balance));
     }
   };
 }

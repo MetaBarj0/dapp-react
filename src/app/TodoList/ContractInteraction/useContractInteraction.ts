@@ -1,6 +1,6 @@
 import axios from "axios";
 import { BrowserProvider, JsonRpcSigner } from "ethers";
-import { Dispatch, MouseEvent, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 export type Props = {
   provider: BrowserProvider,
@@ -10,7 +10,7 @@ export type Props = {
 
 export default function useContractInteraction(props: Props, states: States) {
   return {
-    fetchContractInterfaceHandler: async (_event: MouseEvent<HTMLButtonElement>) => {
+    fetchContractInterfaceHandler: async () => {
       if (states.etherscanApiKey.length === 0) {
         props.setErrorMessage("You must provide your etherscan API key");
         return;
