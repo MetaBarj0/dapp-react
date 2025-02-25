@@ -6,7 +6,9 @@ const Balance = (props: Props) => {
 
   const use = useBalance(props, { balance, setBalance });
 
-  useEffect(use.updateBalance, [props.provider, props.contractAddress]);
+  const updateBalance = use.updateBalance;
+
+  useEffect(() => updateBalance, [updateBalance]);
 
   return (
     <>
